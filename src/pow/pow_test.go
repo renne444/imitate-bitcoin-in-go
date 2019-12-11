@@ -25,5 +25,18 @@ func TestMine(t *testing.T) {
 	} else {
 		fmt.Printf("挖矿成功，对应nonce = %d\n", b.Nonce)
 	}
+	pow := NewProofOfWork(b)
+	if pow.IsValid() == false {
+		t.Error("判断1: 验证正确性错误，对->错")
+	}
+}
 
+func TestVaildFalse(t *testing.T) {
+	b := block.NewBlock(nil, "0x0", 1)
+	b.Nonce = 10
+	pow := NewProofOfWork(b)
+
+	if pow.IsValid() == true {
+		t.Error("判断2: 验证正确性错误，错->对")
+	}
 }

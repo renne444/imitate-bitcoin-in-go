@@ -62,6 +62,17 @@ func (p *ProofOfWork) Run() (int, string) {
 	}
 }
 
+//IsValid : 验证区块的nonce值是否合法
+func (p *ProofOfWork) IsValid() bool {
+	var hashInt big.Int
+
+	data := p.prepareData(p.block.Nonce)
+	hash := sha256.Sum256([]byte(data))
+	hashInt.SetBytes(hash[:])
+
+	return hashInt.Cmp(p.target) < 0
+}
+
 func (p *ProofOfWork) prepareData(nonce int) string {
 	data := strconv.Itoa(p.block.Index) +
 		p.block.PreHash +
