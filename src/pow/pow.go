@@ -9,7 +9,7 @@ import (
 )
 
 //Difficulty : 这里的难度指的是签到零的个数
-const Difficulty = 24
+const Difficulty = 10
 const maxNonce = 0x7fffffff
 
 //ProofOfWork :工作量证明
