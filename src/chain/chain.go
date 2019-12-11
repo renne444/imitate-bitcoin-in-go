@@ -14,7 +14,7 @@ type Chain struct {
 // NewChain :新建链
 func NewChain() *Chain {
 	ch := new(Chain)
-	genenisBlock := block.NewGenesisBlock()
+	genenisBlock := block.NewGenesisBlock(transaction.NewCoinbaseTx("renne", ""))
 	ch.Blocks = append(ch.Blocks, genenisBlock)
 	ch.Height = 1
 	return ch

@@ -34,7 +34,8 @@ func NewBlockchain() *Blockchain {
 		b := tx.Bucket([]byte(blockBucket))
 
 		if b == nil {
-			genesisBlock := block.NewGenesisBlock()
+			//新建创币交易
+			genesisBlock := block.NewGenesisBlock(transaction.NewCoinbaseTx("renne", ""))
 			b, _ := tx.CreateBucket([]byte(blockBucket))
 			genesisBlockSerialize, _ := genesisBlock.Serialize()
 			err = b.Put([]byte(genesisBlock.Hash), genesisBlockSerialize)

@@ -9,7 +9,7 @@ import (
 
 func TestNewGenesisBlock(t *testing.T) {
 	fmt.Println("Test TestNewGenesisBlock START")
-	block := NewGenesisBlock()
+	block := NewGenesisBlock(transaction.NewCoinbaseTx("renne", ""))
 	byteBlock, _ := json.Marshal(block)
 	strBlock := string(byteBlock)
 	fmt.Println(strBlock)
@@ -20,7 +20,7 @@ func TestNewBlock(t *testing.T) {
 	fmt.Println("Test TestNewBlock ")
 	var txgp []*transaction.Tx
 
-	txgp = append(txgp, transaction.NewTx("fuckyou"))
+	txgp = append(txgp, transaction.NewCoinbaseTx("renne", ""))
 	block := NewBlock(txgp, "0x0", 1)
 
 	j, _ := json.Marshal(block)
@@ -30,7 +30,7 @@ func TestNewBlock(t *testing.T) {
 
 func serializeSimulate(t *testing.T) []byte {
 	var txgp []*transaction.Tx
-	txgp = append(txgp, transaction.NewTx("fuckyou"))
+	txgp = append(txgp, transaction.NewCoinbaseTx("renne", ""))
 	block := NewBlock(txgp, "0x0", 1)
 
 	by, err := block.Serialize()
