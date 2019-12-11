@@ -3,6 +3,7 @@ package httpaccess
 // 参考自 https://studygolang.com/articles/9467
 
 import (
+	"block"
 	"blockchain"
 	"encoding/json"
 	"fmt"
@@ -28,11 +29,12 @@ func (access *HTTPAccess) addBlock(w http.ResponseWriter, r *http.Request) {
 
 func (access *HTTPAccess) printChainData(w http.ResponseWriter, r *http.Request) {
 	bcit := access.bc.NewIterator()
+	var res []*block.Block
 	for b := bcit.Next(); b != nil; b = bcit.Next() {
-		j, _ := json.Marshal(b)
-
-		w.Write(j)
+		res = append(res, b)
 	}
+	j, _ := json.Marshal(res)
+	w.Write(j)
 }
 
 //Run : 执行HTTP操作
@@ -43,5 +45,6 @@ func (access *HTTPAccess) Run() {
 	http.HandleFunc("/add", access.addBlock)
 	http.HandleFunc("/query", access.printChainData)
 
+	fmt.Println("server linstening on 0.0.0.0:40000")
 	http.ListenAndServe("0.0.0.0:40000", nil)
 }
