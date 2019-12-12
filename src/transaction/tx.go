@@ -15,10 +15,20 @@ type TxInput struct {
 	ScriptSig string `json:"sig"`
 }
 
+//CanUnlockOutputWith : 某个输入，能否解锁拥有某个公钥
+func (txi *TxInput) CanUnlockOutputWith(scriptPub string) bool {
+	return scriptPub == txi.ScriptSig
+}
+
 //TxOutput : 交易输出部分，其实就是UTXO统计的部分
 type TxOutput struct {
 	Value        int    `json:"value"`
 	ScriptPubkey string `json:"pubkey"`
+}
+
+//CanBeUnlockedWith : 某笔输出能否被某个签名解锁
+func (txo *TxOutput) CanBeUnlockedWith(scriptSig string) bool {
+	return txo.ScriptPubkey == scriptSig
 }
 
 //Tx 交易的格式

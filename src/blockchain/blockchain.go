@@ -91,3 +91,12 @@ func (bc *Blockchain) AppendNewBlock(Txs []*transaction.Tx) error {
 	}
 	return err
 }
+
+//FindUnspentTransactions : 遍历整条链，将与某交易相关的所有未花费交易都找出来
+func (bc *Blockchain) FindUnspentTransactions(address string) []*transaction.Tx {
+	bcit := bc.NewIterator()
+
+	for block := bcit.Next(); block != nil; bcit.Next() {
+
+	}
+}

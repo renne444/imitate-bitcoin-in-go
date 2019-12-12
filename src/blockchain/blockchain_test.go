@@ -16,3 +16,7 @@ func TestAppend(t *testing.T) {
 	//	fmt.Println(string(bc.tip))
 
 }
+
+func TestAppendUTXO(t *testing.T) {
+
+}
