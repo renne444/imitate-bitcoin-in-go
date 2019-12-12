@@ -35,7 +35,6 @@ func (txo *TxOutput) CanBeUnlockedWith(scriptSig string) bool {
 type Tx struct {
 	Vin  []TxInput  `json:"vin"`
 	Vout []TxOutput `json:"vout"`
-	ID   string     `json:"id"`
 	Hash string     `json:"hash"`
 }
 
@@ -49,9 +48,9 @@ func NewCoinbaseTx(to, data string) *Tx {
 		data = fmt.Sprintf("Reward to %s", to)
 	}
 
-	txin := TxInput{[]byte{}, -1, data}
+	txin := TxInput{[]byte(""), -1, data}
 	txout := TxOutput{coinbaseReward, to}
-	tx := Tx{[]TxInput{txin}, []TxOutput{txout}, "id_sample", ""}
+	tx := Tx{[]TxInput{txin}, []TxOutput{txout}, ""}
 
 	tx.Hash = tx.TxHash()
 	return &tx
@@ -71,7 +70,7 @@ func (tx *Tx) TxHash() string {
 	jsonInput, _ := json.Marshal(tx.Vin)
 	jsonOutput, _ := json.Marshal(tx.Vout)
 
-	data := bytes.Join([][]byte{jsonInput, jsonOutput, []byte(tx.ID)}, []byte{})
+	data := bytes.Join([][]byte{jsonInput, jsonOutput}, []byte{})
 
 	hashInByte := sha256.Sum256(data)
 	hashValue := "0x" + hex.EncodeToString(hashInByte[:])
