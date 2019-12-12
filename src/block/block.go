@@ -23,7 +23,7 @@ type Block struct {
 
 //NewGenesisBlock 根据配置生成新区块
 func NewGenesisBlock(coinbase *transaction.Tx) *Block {
-	return NewBlock([]*transaction.Tx{coinbase}, "0x0", 0)
+	return NewBlock([]*transaction.Tx{coinbase}, "", 0)
 }
 
 //NewBlock 新增普通区块
