@@ -22,7 +22,7 @@ func (bc *Blockchain) NewIterator() *Iterator {
 func (it *Iterator) Next() *block.Block {
 	var b *block.Block
 
-	if string(it.currentHash) == "0x0" {
+	if string(it.currentHash) == "" {
 		return nil
 	}
 

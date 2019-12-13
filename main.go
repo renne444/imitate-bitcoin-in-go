@@ -1,6 +1,8 @@
 package main
 
-import "httpaccess"
+import (
+	"httpaccess"
+)
 
 func main() {
 	access := httpaccess.HTTPAccess{}

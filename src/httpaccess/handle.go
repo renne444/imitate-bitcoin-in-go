@@ -41,6 +41,21 @@ func (access *HTTPAccess) printChainData(w http.ResponseWriter, r *http.Request)
 func (access *HTTPAccess) Run() {
 
 	access.bc = blockchain.NewBlockchain()
+	//coinbaseTx := transaction.NewCoinbaseTx("kitty", "")
+	//tx := transaction.Tx{
+	//	Vin: []transaction.TxInput{transaction.TxInput{
+	//		InputTxID: ("0x40e5013d6d26be3719f7e4325c179b60506d2e8f6f79c8e5405fe871afa89cd5"),
+	//		InputVout: 0,
+	//		ScriptSig: "renne"}},
+	//	Vout: []transaction.TxOutput{transaction.TxOutput{Value: 27, ScriptPubkey: "renne"}, transaction.TxOutput{Value: 23, ScriptPubkey: "kitty"}},
+	//	Hash: "",
+	//}
+
+	//tx.Hash = tx.TxHash()
+
+	//if err := access.bc.AppendNewBlock([]*transaction.Tx{coinbaseTx, &tx}); err != nil {
+	//	fmt.Printf("append new block error = %s", err.Error())
+	//}
 
 	http.HandleFunc("/add", access.addBlock)
 	http.HandleFunc("/query", access.printChainData)

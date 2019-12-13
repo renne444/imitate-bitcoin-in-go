@@ -96,7 +96,39 @@ func (bc *Blockchain) AppendNewBlock(Txs []*transaction.Tx) error {
 func (bc *Blockchain) FindUnspentTransactions(address string) []*transaction.Tx {
 	bcit := bc.NewIterator()
 
-	for block := bcit.Next(); block != nil; bcit.Next() {
+	unspentTransaction := []*transaction.Tx{}
+	spentTransactionOutput := make(map[string][]int)
 
+	for block := bcit.Next(); block != nil; block = bcit.Next() {
+		for _, tx := range block.Tx {
+
+			hasOutputUnspent := false
+			for outputIndex, txOutput := range tx.Vout {
+				isOutputSpent := false
+				if txOutput.CanBeUnlockedWith(address) != true {
+					continue
+				}
+				for _, spentIndex := range spentTransactionOutput[tx.Hash] {
+					if outputIndex == spentIndex {
+						isOutputSpent = true
+						break
+					}
+				}
+				if isOutputSpent == false {
+					hasOutputUnspent = true
+				}
+			}
+			if hasOutputUnspent == true {
+				unspentTransaction = append(unspentTransaction, tx)
+			}
+
+			for _, txInput := range tx.Vin {
+				if txInput.CanUnlockOutputWith(address) {
+					spentTransactionOutput[txInput.InputTxID] = append(spentTransactionOutput[txInput.InputTxID], txInput.InputVout)
+				}
+			}
+
+		}
 	}
+	return unspentTransaction
 }

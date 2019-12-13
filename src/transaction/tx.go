@@ -10,7 +10,7 @@ import (
 
 //TxInput 交易输入部分
 type TxInput struct {
-	InputTxID []byte `json:"ID"`
+	InputTxID string `json:"ID"`
 	InputVout int    `json:"index"`
 	ScriptSig string `json:"sig"`
 }
@@ -48,7 +48,7 @@ func NewCoinbaseTx(to, data string) *Tx {
 		data = fmt.Sprintf("Reward to %s", to)
 	}
 
-	txin := TxInput{[]byte(""), -1, data}
+	txin := TxInput{"", -1, data}
 	txout := TxOutput{coinbaseReward, to}
 	tx := Tx{[]TxInput{txin}, []TxOutput{txout}, ""}
 
